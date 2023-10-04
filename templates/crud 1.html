@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    {% load static %}
+</head>
+<style>
+    body {
+        background-image: url('{% static "images/image8.jpg" %}');
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    form {
+        width: 400px;
+        background-color: skyblue;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 5px black;
+    }
+
+
+    .form-control {
+        width: 90%;
+        margin: 10px 0;
+        padding: 10px;
+        text-align: left;
+    }
+
+    
+    .btn {
+        margin-top: 5px;
+       
+    }
+
+    h1 {
+        color: white;
+    }
+
+    .gender-label {
+        display: inline-block;
+        width: 100px;
+        text-align: left;
+    }
+
+    .gender-input {
+        display: inline-block;
+        width: 20px;
+    }
+
+    .navbar {
+        justify-content: flex-start;
+        background-color: black !important;
+        align-items: center;
+        width: 100%;
+    }
+
+    .navbar-nav {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .navbar-nav li {
+        padding: 0 15px;
+        list-style-type: none;
+    }
+
+    .navbar-nav>li {
+        padding: 0 15px;
+    }
+
+    .form-inline {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar .form-control {
+        border: 1px solid #ccc;
+    }
+
+
+    .navbar-nav .nav-link {
+        color: blue !important;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+        </a>
+
+        <div class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'crud' %}">Form</a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'show_products' %}">Show_Details</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 ">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+
+            </form>
+        </div>
+    </nav><br><br>
+    <div class="container">
+        <h1>STUDENT REGISTRATION FORM</h1>
+        <form enctype="multipart/form-data" method="post" action="{% url 'add_product' %}">
+            {% csrf_token %}
+            <input type="text" name="pname" class="form-control" placeholder="Enter first Name">
+            <input type="text" name="lname" class="form-control" placeholder="Enter last Name">
+            <input type="number" name="age" class="form-control" placeholder="Enter age">
+            <input type="date" name="dob" class="form-control" placeholder="Enter the date of birth">
+
+            <label for="qualification">Qualification:</label>
+            <select id="qualification" name="qualification" class="form-control">
+                <option value="">-- Select Qualification --</option>
+                <option value="B-Tech">B-Tech</option>
+                <option value="M-Tech">M-Tech</option>
+                <option value="B-Com">B-Com</option>
+                <option value="BCA">BCA</option>
+            </select>
+
+            <div class="form-control">
+                <span class="gender-label">Gender:</span>
+                <input type="radio" name="gender" value="Male" id="male" class="gender-input">
+                <label for="male">Male</label>
+
+                <input type="radio" name="gender" value="Female" id="female" class="gender-input">
+                <label for="female">Female</label>
+            </div>
+
+
+            <input type="file" name="file" class="form-control" accept="image/*">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

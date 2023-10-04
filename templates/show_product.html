@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Image</title>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    {% load static %}
+</head>
+
+<style>
+    img {
+        max-width: 200px;
+        max-height: 200px;
+        width: auto;
+        height: auto;
+    }
+
+    .add-button {
+        border: 2px solid white;
+        padding: 5px 15px;
+        border-radius: 5px;
+        background-color: white;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .add-button:hover {
+        background-color: white;
+    }
+
+    body {
+        background-image: url('{% static "images/image2.jpg" %}');
+        background-size: cover;
+    }
+
+    .center-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    .table-container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        margin-top: 0;
+    }
+
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid black;
+    background-color:lightgrey; 
+}
+
+tr {
+    border-bottom: 1px solid #000; 
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-right: 1px solid #000;
+}
+
+th {
+    background-color: #f2f2f2;
+    border-top: 1px solid #000; 
+}
+
+</style>
+
+<body>
+    <div class="center-content">
+        <div class="container table-container">
+            <h1 class="text-center">
+                SHOW DETAILS
+                <button type="button" class="add-button"><a href="{% url 'crud' %}">ADD</a></button>
+            </h1>
+
+            <table class="table text-center mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col">FIRST NAME</th>
+                        <th scope="col">LAST NAME</th>
+                        <th scope="col">AGE</th>
+                        <th scope="col">DATE OF BIRTH</th>
+                        <th scope="col">QUALIFICATION</th>
+                        <th scope="col">GENDER</th>
+                        <th scope="col">IMAGE</th>
+                        <th scope="col">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in prdts %}
+                    <tr>
+                        <td>{{ p.first_name }}</td>
+                        <td>{{ p.last_name }}</td>
+                        <td>{{ p.age }}</td>
+                       
+                        <td>{{ p.dob }}</td>
+
+
+
+                       
+                        <td>
+                            {% if p.qualification == 'B-tech' %}
+                            B-tech
+                            {% elif p.qualification == 'M-tech' %}
+                            M-tech
+                            {% elif p.qualification == 'Bcom' %}
+                            Bcom
+                            {% elif p.qualification == 'BCA' %}
+                            BCA
+                            {% else %}
+                            {{ p.qualification }} 
+                            {% endif %}
+                        </td>
+                        <td>{{ p.gender }}</td>
+
+                        <td>
+                            {% if p.image %}
+                                <img src="{{ p.image.url }}" class="w-25">
+                            {% else %}
+                                <img src="{% static 'images/default.jpg' %}" class="w-25">
+                            {% endif %}
+                        </td>
+                        
+                        <td>
+                            <div class="btn-group">
+                                <form action="{% url 'edit_product_details' p.id %}" method="get"
+                                    style="display: inline;">
+                                    <button type="submit" class="btn btn-primary btn-sm">Edit</button><br><br>
+                                </form>
+                                <form action="{% url 'deletepage' p.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm ml-2">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
